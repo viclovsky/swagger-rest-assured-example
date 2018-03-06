@@ -61,8 +61,8 @@
                                 <dateLibrary>java8</dateLibrary>
                             </configOptions>
                             <library>rest-assured</library>
-                            <!--Generate only client-->
-                            <generateApiTests>false</generateApiTests>
+                            <!--Generate test templates-->
+                            <generateApiTests>true</generateApiTests>
                             <generateApiDocumentation>false</generateApiDocumentation>
                             <generateModelDocumentation>false</generateModelDocumentation>
                             <apiPackage>${default.package}.api</apiPackage>

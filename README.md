@@ -4,7 +4,7 @@ This is entry point for
 [Pull Request](https://github.com/swagger-api/swagger-codegen/pull/7492)
 
 ## Quick Start
-* Add to your <build> section in pom.xml: maven plugin with version 2.4.0-SNAPSHOT and configurate this plugin, in <inputSpec> point swagger specification:
+* Add maven plugin with version 2.4.0-SNAPSHOT into pom.xml. Don't forget <inputSpec> in configuration tag with swagger specification:
 ```(xml)
  <plugin>
      <groupId>io.swagger</groupId>
@@ -25,8 +25,8 @@ This is entry point for
                      <dateLibrary>java8</dateLibrary>
                  </configOptions>
                  <library>rest-assured</library>
-                 <!--Generate only client-->
-                 <generateApiTests>false</generateApiTests>
+                 <!--Generate test templates-->
+                 <generateApiTests>true</generateApiTests>
                  <generateApiDocumentation>false</generateApiDocumentation>
                  <generateModelDocumentation>false</generateModelDocumentation>
                  <apiPackage>${default.package}.api</apiPackage>
@@ -67,11 +67,20 @@ See [swagger-codegen-maven-plugin](https://github.com/swagger-api/swagger-codege
          <version>${okio-version}</version>
      </dependency>
 ```
+* Add necessary dependencies for 'templates' for tests:
+```
+     <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>${junit.version}</version>
+     </dependency>
+```
+
 * Run ```mvn clean compile``` for generation of API client
 
-* After that generated code has been placed in target, you can use this for write tests. In target also placed templates of tests which used junit 4.
+* As soon as generated code has been placed in target, you can use it to write your tests. Moreover 'templates' for tests will be generated.
 
-* The simplest test with junit4 looks like this (see SimpleJunit4Test):
+* The simplest test with junit4 looks like below (see SimpleJunit4Test):
 ```
     private ApiClient api;
     
@@ -89,7 +98,7 @@ See [swagger-codegen-maven-plugin](https://github.com/swagger-api/swagger-codege
         assertThat(inventory.keySet().size(), greaterThan(0));
     }
 ```
-* I add simple junit5 test with inject client for demonstration (see SimpleJunit5Test).
+* Simple junit5 test with inject client was added for demonstration (see SimpleJunit5Test)
 
 ## Links
 * [swagger-codegen-maven-plugin](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen-maven-plugin)
