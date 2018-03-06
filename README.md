@@ -89,12 +89,12 @@ See [swagger-codegen-maven-plugin](https://github.com/swagger-api/swagger-codege
         api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
                 () -> new RequestSpecBuilder().setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
                         .addFilter(new ErrorLoggingFilter())
-                        .setBaseUri("http://petstore.swagger.io:80/v2"))).store();
+                        .setBaseUri("http://petstore.swagger.io:80/v2")));
     }
 
     @Test
     public void getInventoryTest() {
-        Map<String, Integer> inventory = api.getInventory().executeAs(validatedWith(shouldBeCode(SC_OK)));
+        Map<String, Integer> inventory = api.store().getInventory().executeAs(validatedWith(shouldBeCode(SC_OK)));
         assertThat(inventory.keySet().size(), greaterThan(0));
     }
 ```
