@@ -24,10 +24,12 @@
         <gson-version>2.6.1</gson-version>
         <gson-fire-version>1.8.2</gson-fire-version>
         <okio-version>1.13.0</okio-version>
-        <!--Junit5-->
+        <!--junit5-->
         <junit.jupiter.version>5.1.0</junit.jupiter.version>
         <junit.vintage.version>5.1.0</junit.vintage.version>
         <junit.platform.version>1.1.0</junit.platform.version>
+        <!--junit4-->
+        <junit.version>4.12</junit.version>
         <!--surefire plugin-->
         <thread.count>1</thread.count>
     </properties>
@@ -74,6 +76,12 @@
                 <groupId>com.squareup.okio</groupId>
                 <artifactId>okio</artifactId>
                 <version>${okio-version}</version>
+            </dependency>
+            <!--Junit4-->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
             </dependency>
             <!--Junit5-->
             <dependency>

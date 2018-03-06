@@ -3,12 +3,93 @@
 This is entry point for 
 [Pull Request](https://github.com/swagger-api/swagger-codegen/pull/7492)
 
-## Precondition ##
-* swagger-codegen version 2.4.0-SNAPSHOT
-* java 8
+## Quick Start
+* Add to your <build> section in pom.xml: maven plugin with version 2.4.0-SNAPSHOT and configurate this plugin, in <inputSpec> point swagger specification:
+```(xml)
+ <plugin>
+     <groupId>io.swagger</groupId>
+     <artifactId>swagger-codegen-maven-plugin</artifactId>
+     <!--Need in your local maven repo-->
+     <version>2.4.0-SNAPSHOT</version>
+     <executions>
+         <execution>
+             <goals>
+                 <goal>generate</goal>
+             </goals>
+             <configuration>
+                 <!--Your input swagger spec-->
+                 <inputSpec>http://petstore.swagger.io/v2/swagger.json</inputSpec>
+                 <output>${project.build.directory}/generated-sources/swagger</output>
+                 <language>java</language>
+                 <configOptions>
+                     <dateLibrary>java8</dateLibrary>
+                 </configOptions>
+                 <library>rest-assured</library>
+                 <!--Generate only client-->
+                 <generateApiTests>false</generateApiTests>
+                 <generateApiDocumentation>false</generateApiDocumentation>
+                 <generateModelDocumentation>false</generateModelDocumentation>
+                 <apiPackage>${default.package}.api</apiPackage>
+                 <modelPackage>${default.package}.model</modelPackage>
+                 <invokerPackage>${default.package}</invokerPackage>
+             </configuration>
+         </execution>
+     </executions>
+ </plugin>
+```
+See [swagger-codegen-maven-plugin](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen-maven-plugin) for detail configuration.
 
-## Generation of client ##
-```mvn clean compile```  (see API client's pom.xml)
+* Add necessary dependencies for API client:
+```(xml)
+     <dependency>
+         <groupId>io.swagger</groupId>
+         <artifactId>swagger-annotations</artifactId>
+         <version>${swagger-core-version}</version>
+     </dependency>
+     <dependency>
+         <groupId>io.rest-assured</groupId>
+         <artifactId>rest-assured</artifactId>
+         <version>${rest-assured.version}</version>
+     </dependency>
+     <dependency>
+         <groupId>com.google.code.gson</groupId>
+         <artifactId>gson</artifactId>
+         <version>${gson-version}</version>
+     </dependency>
+     <dependency>
+         <groupId>io.gsonfire</groupId>
+         <artifactId>gson-fire</artifactId>
+         <version>${gson-fire-version}</version>
+     </dependency>
+     <dependency>
+         <groupId>com.squareup.okio</groupId>
+         <artifactId>okio</artifactId>
+         <version>${okio-version}</version>
+     </dependency>
+```
+* Run ```mvn clean compile``` for generation of API client
+
+* After that generated code has been placed in target, you can use this for write tests. In target also placed templates of tests which used junit 4.
+
+* The simplest test with junit4 looks like this (see SimpleJunit4Test):
+```
+    private ApiClient api;
+    
+    @Before
+    public void createApi() {
+        api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
+                () -> new RequestSpecBuilder().setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
+                        .addFilter(new ErrorLoggingFilter())
+                        .setBaseUri("http://petstore.swagger.io:80/v2"))).store();
+    }
+
+    @Test
+    public void getInventoryTest() {
+        Map<String, Integer> inventory = api.getInventory().executeAs(validatedWith(shouldBeCode(SC_OK)));
+        assertThat(inventory.keySet().size(), greaterThan(0));
+    }
+```
+* I add simple junit5 test with inject client for demonstration (see SimpleJunit5Test).
 
 ## Links
 * [swagger-codegen-maven-plugin](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen-maven-plugin)
