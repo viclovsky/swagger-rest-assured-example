@@ -25,7 +25,7 @@ This is entry point for
                      <dateLibrary>java8</dateLibrary>
                  </configOptions>
                  <library>rest-assured</library>
-                 <!--Generate test templates-->
+                 <!--Generate 'templates' for tests-->
                  <generateApiTests>true</generateApiTests>
                  <generateApiDocumentation>false</generateApiDocumentation>
                  <generateModelDocumentation>false</generateModelDocumentation>
@@ -76,7 +76,7 @@ See [swagger-codegen-maven-plugin](https://github.com/swagger-api/swagger-codege
      </dependency>
 ```
 
-* Run ```mvn clean compile``` for generation of API client
+* Run ```mvn clean compile``` for generation of API client and 'templates' for tests
 
 * As soon as generated code has been placed in target (```/swagger-rest-assured-example/example-api-client/target/generated-sources/swagger/src/main```), you can use it to write your tests. Moreover 'templates' for tests will be generated (```/swagger-rest-assured-example/example-api-client/target/generated-sources/swagger/src/test```).
 
