@@ -5,7 +5,7 @@ This is entry point for
 
 ## Quick Start
 * Add maven plugin with version 2.4.0-SNAPSHOT into pom.xml. Don't forget <inputSpec> in configuration tag with swagger specification:
-```(xml)
+```xml
  <plugin>
      <groupId>io.swagger</groupId>
      <artifactId>swagger-codegen-maven-plugin</artifactId>
@@ -40,7 +40,7 @@ This is entry point for
 See [swagger-codegen-maven-plugin](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen-maven-plugin) for detail configuration.
 
 * Add necessary dependencies for API client:
-```(xml)
+```xml
      <dependency>
          <groupId>io.swagger</groupId>
          <artifactId>swagger-annotations</artifactId>
@@ -68,7 +68,7 @@ See [swagger-codegen-maven-plugin](https://github.com/swagger-api/swagger-codege
      </dependency>
 ```
 * Add necessary dependencies for 'templates' for tests:
-```
+```xml
      <dependency>
          <groupId>junit</groupId>
          <artifactId>junit</artifactId>
@@ -78,10 +78,10 @@ See [swagger-codegen-maven-plugin](https://github.com/swagger-api/swagger-codege
 
 * Run ```mvn clean compile``` for generation of API client
 
-* As soon as generated code has been placed in target, you can use it to write your tests. Moreover 'templates' for tests will be generated.
+* As soon as generated code has been placed in target (```/swagger-rest-assured-example/example-api-client/target/generated-sources/swagger/src/main```), you can use it to write your tests. Moreover 'templates' for tests will be generated (```/swagger-rest-assured-example/example-api-client/target/generated-sources/swagger/src/test```).
 
-* The simplest test with junit4 looks like below (see SimpleJunit4Test):
-```
+* The simplest test with junit4 looks like below (see [SimpleJunit4Test](https://github.com/viclovsky/swagger-rest-assured-example/blob/master/example-api-tests/src/test/java/ru/vicdev/example/SimpleJunit4Test.java)):
+```java
     private ApiClient api;
     
     @Before
@@ -98,7 +98,7 @@ See [swagger-codegen-maven-plugin](https://github.com/swagger-api/swagger-codege
         assertThat(inventory.keySet().size(), greaterThan(0));
     }
 ```
-* Simple junit5 test with inject client was added for demonstration (see SimpleJunit5Test)
+* Simple junit5 test with inject client was added for demonstration (see [SimpleJunit5Test](https://github.com/viclovsky/swagger-rest-assured-example/blob/master/example-api-tests/src/test/java/ru/vicdev/example/SimpleJunit5Test.java))
 
 ## Links
 * [swagger-codegen-maven-plugin](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen-maven-plugin)
