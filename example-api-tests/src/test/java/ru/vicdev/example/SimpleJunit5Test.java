@@ -13,6 +13,8 @@ import java.util.Map;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.vicdev.example.swagger.client.ResponseSpecBuilders.shouldBeCode;
 import static ru.vicdev.example.swagger.client.ResponseSpecBuilders.validatedWith;
 
@@ -24,8 +26,20 @@ public class SimpleJunit5Test {
     private ApiClient api;
 
     @Test
-    void simpleTest() {
+    public void sizeInventoryTest() {
         Map<String, Integer> inventory = api.store().getInventory().executeAs(validatedWith(shouldBeCode(SC_OK)));
         assertThat(inventory.keySet().size(), greaterThan(0));
+    }
+
+    @Test
+    public void valueSoldTest() {
+        Map<String, Integer> inventory = api.store().getInventory().executeAs(validatedWith(shouldBeCode(SC_OK)));
+        assertEquals(inventory.get("sold"), Integer.valueOf(12));
+    }
+
+    @Test
+    public void keyUnavailableTest() {
+        Map<String, Integer> inventory = api.store().getInventory().executeAs(validatedWith(shouldBeCode(SC_OK)));
+        assertTrue(inventory.containsKey("unavailable"));
     }
 }
